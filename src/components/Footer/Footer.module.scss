@@ -1,0 +1,20 @@
+@import '../../scss/variables';
+
+.footer {
+    height: 130px;
+    padding: 20px;
+    background: $primary-dark-gray;
+    .container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        .logo {
+            height: 40px;
+            width: 100px;
+        }
+        .text, .link {
+            color: white;
+            text-decoration: none;
+        }
+    }
+}

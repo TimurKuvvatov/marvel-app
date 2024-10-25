@@ -1,0 +1,33 @@
+@import '../../scss/variables';
+
+.header {
+  height: 80px;
+  width: 100vw;
+  background: $primary-red;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  .logo {
+    height: 40px;
+    width: 100px;
+  }
+  .nav {
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      .navItem {
+        cursor: pointer;
+        color: $primary-orange;
+        font-weight: 700;
+        font-size: 22px;
+      }
+      .activeNavItem {
+        text-decoration: underline;
+      }
+    }
+  }
+}
