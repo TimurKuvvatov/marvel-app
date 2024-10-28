@@ -1,0 +1,23 @@
+@import '../../scss/variables';
+.card {
+  width: 260px;
+  height: 280px;
+  border: 1px solid gray;
+  transition: transform 0.3s ease-in-out;
+  .image {
+    background-color: gray;
+    background-size: cover !important;
+    background-position: center !important;
+    width: 100%;
+    height: 170px;
+  }
+  .content {
+    padding: 10px;
+    .title {
+      color: $primary-red;
+    }
+  }
+  &:hover {
+    transform: translateY(-5px);
+  }
+}

@@ -9,10 +9,10 @@ const PageTitle: FC<PageTitleProps>= ({title, subtitle}) => {
   return (
     <div className={classes.container}>
         <h1 className={classes.title}>
-            {title}
+            {title} 
         </h1>
         <h2 className={classes.subtitle}>
-            {subtitle}
+            ({subtitle})
         </h2>
     </div>
   )

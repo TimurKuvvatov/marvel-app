@@ -3,11 +3,13 @@ export interface Character {
   name: string;
   description: string;
   comics: number[];
+  image: string;
 }
 
 export interface Comic {
   id: number;
-  title: string;
+  name: string;
   description: string;
   characters: number[];
+  image: string;
 }
