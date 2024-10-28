@@ -1,0 +1,25 @@
+@import '../../scss/variables';
+
+.search {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .input {
+    height: 40px;
+    width: 80vw;
+    max-width: calc(5 * 260px + 5 * 20px + 125px);
+    font-size: 18px;
+    padding: 0px 15px;
+  }
+  .button {
+    width: 260px;
+    height: 40px;
+    background: $primary-orange;
+    color: white;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
