@@ -7,9 +7,7 @@ const App: FC = () => {
   return (
     <>
       <Header />
-      <div className="container">
-        <AppRoutes/>
-      </div>
+      <AppRoutes />
       <Footer />
     </>
   );

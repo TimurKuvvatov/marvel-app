@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useMemo } from 'react';
 import classes from './CardPage.module.scss';
 import { useParams } from 'react-router';
 import { Character, Comic } from '../types/dataTypes';
@@ -12,25 +12,26 @@ interface CardPageProps {
 
 const CardPage: FC<CardPageProps> = ({ items, type }) => {
   const params = useParams<{ id: string }>();
-  const [item, setItem] = useState<Character | Comic | null>(null);
-
-  useEffect(() => {
+  
+  const item = useMemo(() => {
     if (params.id) {
       const id = parseInt(params.id);
-      const foundItem = items.find((i) => i.id === id);
-      setItem(foundItem || null);
+      return items.find((i) => i.id === id) || null;
     }
-  }, [params.id]);
+    return null;
+  }, [params.id, items]);
 
   if (!item) {
     return <h2>{type === 'character' ? 'Character not found' : 'Comic not found'}</h2>;
   }
+
   const relatedItems =
     type === 'character' ? (item as Character).comics : (item as Comic).characters;
 
   if (!relatedItems) {
     return null;
   }
+
   return (
     <div className={classes.item}>
       <div className={classes.image} style={{ background: `url(${item.image})` }}></div>

@@ -5,6 +5,9 @@ import ironManImg from '../assets/img/characters/iron-man.png';
 import captainAmericaImg from '../assets/img/characters/captain-america.png';
 import hulkImg from '../assets/img/characters/hulk.png';
 import avengersImg from '../assets/img/comics/comic-avengers.jpeg';
+import avengersImg2 from '../assets/img/comics/avengers2.png';
+import avengersImg3 from '../assets/img/comics/avengers3.png';
+import avengersImg4 from '../assets/img/comics/avengers4.png';
 export const mockCharacters: Character[] = [
   {
     id: 1,
@@ -149,21 +152,21 @@ export const mockComics: Comic[] = [
     name: 'The Amazing Spider-Man #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg2,
   },
   {
     id: 3,
     name: 'Iron Man #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg3,
   },
   {
     id: 4,
     name: 'Captain America Comics #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg4,
   },
   {
     id: 5,
@@ -177,21 +180,21 @@ export const mockComics: Comic[] = [
     name: 'The Incredible Hulk #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg2,
   },
   {
     id: 7,
     name: 'Spider-Verse #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg3,
   },
   {
     id: 8,
     name: 'Avengers Assemble #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg4,
   },
   {
     id: 9,
@@ -205,21 +208,21 @@ export const mockComics: Comic[] = [
     name: 'Infinity War #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg2,
   },
   {
     id: 11,
     name: 'Spider-Man vs. Hulk #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg3,
   },
   {
     id: 12,
     name: 'Iron Man vs. Captain America #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg4,
   },
   {
     id: 13,
@@ -233,21 +236,21 @@ export const mockComics: Comic[] = [
     name: 'Spider-Geddon #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg2,
   },
   {
     id: 15,
     name: 'Hulk Smash #1',
     description: 'No description provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg3,
   },
   {
     id: 16,
     name: 'Spider-Man Reborn #1',
     description: 'No Description Provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg4,
   },
   {
     id: 17,
@@ -261,6 +264,6 @@ export const mockComics: Comic[] = [
     name: 'Captain America Returns #1',
     description: 'No Description Provided',
     characters: [1, 2, 3, 4],
-    image: avengersImg,
+    image: avengersImg2,
   },
 ];
