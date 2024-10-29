@@ -11,12 +11,12 @@ interface ComicsPageProps {
 
 const ComicsPage: FC<ComicsPageProps>= ({comics}) => {
   return (
-    <>
+        <div className="container">
       <PageTitle title="Comics" subtitle={`${comics.length}`} />
       <Search placeholder='Comics'/>
       <Divider />
-      <CardSection items={comics} />
-    </>
+      <CardSection pageName='comics' items={comics} />
+        </div>
   )
 }
 

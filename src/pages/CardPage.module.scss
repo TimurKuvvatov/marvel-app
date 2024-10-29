@@ -1,0 +1,26 @@
+.item {
+  .image {
+    width: 100% !important;
+    height: 50vh !important;
+    background-size: cover !important;
+    background-position: center 30% !important;
+  }
+  .content {
+    padding: 30px 60px;
+    min-height: 40vh;
+    display: flex;
+    flex-direction: row;
+    gap: 20%;
+    .title {
+      font-size: 36px;
+    }
+    .description {
+      font-size: 24px;
+    }
+    .comics {
+      ul {
+        list-style-type: none;
+      }
+    }
+  }
+}
