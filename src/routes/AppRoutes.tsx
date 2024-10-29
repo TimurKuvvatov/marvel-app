@@ -1,11 +1,11 @@
-import React from 'react';
+import { FC } from 'react';
 import { useRoutes } from 'react-router-dom';
 import CharactersPage from '../pages/CharactersPage';
 import ComicsPage from '../pages/ComicsPage';
 import { mockCharacters, mockComics } from '../data/mockData';
 import CardPage from '../pages/CardPage';
 
-const AppRoutes = () => {
+const AppRoutes: FC = () => {
   const routes = useRoutes([
     {
       path: '/',

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Character, Comic } from '../../types/dataTypes';
 import classes from './CardSection.module.scss';
 import Card from '../Card/Card';
