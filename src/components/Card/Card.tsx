@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Character, Comic } from '../../types/dataTypes';
 import classes from './Card.module.scss';
 interface CardProps {
