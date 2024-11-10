@@ -1,88 +1,65 @@
-import { observable, action, makeObservable, runInAction } from 'mobx';
-
+import { makeAutoObservable, runInAction } from 'mobx';
 import api from '../api/helpers/axios';
 import { Character, Comic } from '../types/dataTypes';
+import { Md5 } from 'ts-md5';
 
 class PostsStore {
-  @observable
   characters: Character[] = [];
-
-  @observable
   comics: Comic[] = [];
-
-  @observable
   loading: boolean = false;
-
-  @observable
   error: string | null = null;
 
   constructor() {
-    makeObservable(this);
+    makeAutoObservable(this);
   }
 
-  @action
-  fetchCharacters = async (offset: number = 0, nameStartsWith: string = ''): Promise<void> => {
+  async getPostsList(limit = 100) {
+    this.loading = true;
+    this.error = null;
+    const publicKey = import.meta.env.VITE_PUBLIC_API_KEY;
+    const privateKey = import.meta.env.VITE_PRIVATE_API_KEY;
+    const timestamp = new Date().getTime().toString();
+    const hash = Md5.hashStr(timestamp + privateKey + publicKey);
     try {
-      this.loading = true;
-      this.error = null;
-
-      const response = await api.get('/characters', {
-        params: {
-          offset,
-          nameStartsWith,
-        },
+      console.log('Fetching characters with params:', {
+        limit: Math.min(limit, 100),
+        apikey: publicKey,
+        ts: timestamp,
+        hash: hash,
       });
-
+      const [charactersResponse, comicsResponse] = await Promise.all([
+        api.get('/characters', {
+          params: {
+            limit: Math.min(limit, 100),
+            apikey: publicKey,
+            ts: timestamp,
+            hash: hash,
+          },
+        }),
+        api.get('/comics', {
+          params: {
+            limit: Math.min(limit, 100),
+            apikey: publicKey,
+            ts: timestamp,
+            hash: hash,
+          },
+        }),
+      ]);
       runInAction(() => {
-        this.characters = response.data.data.results;
+        this.characters = charactersResponse.data.data.results;
+        this.comics = comicsResponse.data.data.results;
       });
     } catch (error) {
+      console.error('Error fetching data:', error);
       runInAction(() => {
-        if (error instanceof Error) {
-          this.error = error.message;
-        } else {
-          this.error = 'An unknown error occurred';
-        }
+        this.error = error instanceof Error ? error.message : 'An unknown error occurred';
       });
-      console.error(error);
     } finally {
       runInAction(() => {
         this.loading = false;
       });
     }
-  };
-
-  @action
-  fetchComics = async (offset: number = 0, titleStartsWith: string = ''): Promise<void> => {
-    try {
-      this.loading = true;
-      this.error = null;
-
-      const response = await api.get('/comics', {
-        params: {
-          offset,
-          titleStartsWith,
-        },
-      });
-
-      runInAction(() => {
-        this.comics = response.data.data.results;
-      });
-    } catch (error) {
-      runInAction(() => {
-        if (error instanceof Error) {
-          this.error = error.message;
-        } else {
-          this.error = 'An unknown error occurred';
-        }
-      });
-      console.error(error);
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
-  };
+  }
 }
 
 const postsStore = new PostsStore();
