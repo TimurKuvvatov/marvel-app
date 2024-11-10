@@ -5,6 +5,7 @@
   border: 1px solid gray;
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
+  overflow: hidden;
   .image {
     background-color: gray;
     background-size: cover !important;
@@ -16,6 +17,15 @@
     padding: 10px;
     .title {
       color: $primary-red;
+    }
+    .description {
+      font-weight: 300;
+      font-size: 15px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box; 
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
     }
   }
   &:hover {

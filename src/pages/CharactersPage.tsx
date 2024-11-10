@@ -12,7 +12,7 @@ const CharactersPage: FC<CharactersPageProps> = ({ characters }) => {
   return (
     <div className="container">
       <PageTitle title="Characters" subtitle={`${characters.length}`} />
-      <Search placeholder="Characters" />
+      <Search placeholder="Characters" type="character" />
       <Divider />
       <CardSection pageName="characters" items={characters} />
     </div>

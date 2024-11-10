@@ -1,23 +1,23 @@
-import React, { FC } from 'react'
-import PageTitle from '../components/PageTitle/PageTitle'
-import { Comic } from '../types/dataTypes'
+import React, { FC } from 'react';
+import PageTitle from '../components/PageTitle/PageTitle';
+import { Comic } from '../types/dataTypes';
 import Search from '../components/Search/Search';
 import Divider from '../components/Divider/Divider';
 import CardSection from '../components/CardSection/CardSection';
 
 interface ComicsPageProps {
-    comics: Comic[];
+  comics: Comic[];
 }
 
-const ComicsPage: FC<ComicsPageProps>= ({comics}) => {
+const ComicsPage: FC<ComicsPageProps> = ({ comics }) => {
   return (
-        <div className="container">
+    <div className="container">
       <PageTitle title="Comics" subtitle={`${comics.length}`} />
-      <Search placeholder='Comics'/>
+      <Search placeholder="Comics" type="comic" />
       <Divider />
-      <CardSection pageName='comics' items={comics} />
-        </div>
-  )
-}
+      <CardSection pageName="comics" items={comics} />
+    </div>
+  );
+};
 
-export default ComicsPage
+export default ComicsPage;
