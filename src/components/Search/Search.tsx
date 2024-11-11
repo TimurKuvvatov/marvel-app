@@ -1,35 +1,42 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import classes from './Search.module.scss';
 import useDebounce from '../../hooks/useDebounce';
 import PostsStore from '../../stores/PostsStore';
+import { Character, Comic } from '../../types/dataTypes';
 
 interface SearchProps {
   placeholder: string;
   type: 'character' | 'comic';
+  onSearch: (results: (Character | Comic)[]) => void; 
 }
 
-const Search: FC<SearchProps> = ({ placeholder, type }) => {
+const Search: FC<SearchProps> = ({ placeholder, type, onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const handleSearch = () => {
-    if (type === 'character') {
-      PostsStore.fetchCharacters(0, debouncedSearchTerm);
-    } else {
-      PostsStore.fetchComics(0, debouncedSearchTerm);
-    }
+  const itemsToFilter = type === 'character' ? PostsStore.characters : PostsStore.comics;
+  const filteredResults = PostsStore.filterPosts(itemsToFilter, debouncedSearchTerm);
+  useEffect(() => {
+    onSearch(filteredResults);
+  }, [filteredResults]);
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(filteredResults);
   };
 
   return (
-    <div className={classes.search}>
-      <input 
-        type="text" 
-        placeholder={`Search for ${placeholder} by Name`} 
-        className={classes.input} 
-        onChange={(e) => setSearchTerm(e.target.value)} 
+    <form className={classes.search} onSubmit={handleSearch}>
+      <input
+        type="text"
+        placeholder={`Search for ${placeholder} by Name`}
+        className={classes.input}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <button className={classes.button} onClick={handleSearch}>SEARCH</button>
-    </div>
+      <button type="submit" className={classes.button}>
+        SEARCH
+      </button>
+    </form>
   );
 };
 

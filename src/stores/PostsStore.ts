@@ -60,6 +60,13 @@ class PostsStore {
       });
     }
   }
+  filterPosts(items: (Character | Comic)[], searchTerm: string) {
+    if (!searchTerm) return items;
+    return items.filter((item) => {
+      const nameOrTitle = 'name' in item ? item.name : item.title;
+      return nameOrTitle.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+  }
 }
 
 const postsStore = new PostsStore();

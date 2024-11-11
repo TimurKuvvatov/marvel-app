@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { Character, Comic } from '../types/dataTypes';
 import { Link } from 'react-router-dom';
 import { Item } from '../types/dataTypes';
+import Loading from '../components/Loading/Loading';
 
 interface CardPageProps {
   items: (Character | Comic)[];
@@ -22,7 +23,7 @@ const CardPage: FC<CardPageProps> = ({ items, type }) => {
   }, [params.id, items]);
 
   if (!item) {
-    return <h2>{type === 'character' ? 'Character not found' : 'Comic not found'}</h2>;
+    return <Loading/>;
   }
 
   const relatedItems: Item[] =
@@ -39,20 +40,22 @@ const CardPage: FC<CardPageProps> = ({ items, type }) => {
           <h2 className={classes.title}>
             {type === 'character' ? (item as Character).name : (item as Comic).title}
           </h2>
-          <p className={classes.description}>{item.description}</p>
+          <p className={classes.description}>{item.description ? item.description : 'No description provided'}</p>
         </div>
         <div className={classes.comics}>
           <h2 className={classes.title}>{type === 'character' ? 'Comics' : 'Characters'}</h2>
           <ul>
-            {relatedItems.map((relatedItem) => {
+            {relatedItems.length !== 0 ? relatedItems.map((relatedItem) => {
               const relatedId = relatedItem.resourceURI.split('/');
               const Id = relatedId[relatedId.length - 1];
               return (
                 <li key={`${relatedItem.name}`}>
-                  <Link to={`/${type === 'character' ? 'comics' : 'characters'}/${Id}`}>{relatedItem.name}</Link>
+                  <Link to={`/${type === 'character' ? 'comics' : 'characters'}/${Id}`}>
+                    {relatedItem.name}
+                  </Link>
                 </li>
               );
-            })}
+            }) : 'Will appear later'}
           </ul>
         </div>
       </div>

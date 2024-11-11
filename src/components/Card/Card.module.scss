@@ -17,6 +17,11 @@
     padding: 10px;
     .title {
       color: $primary-red;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box; 
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
     }
     .description {
       font-weight: 300;
