@@ -10,7 +10,7 @@ interface SearchProps {
 
 const Search: FC<SearchProps> = ({ placeholder, type }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  const debouncedSearchTerm = useDebounce(searchTerm, 3000);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
@@ -21,7 +21,7 @@ const Search: FC<SearchProps> = ({ placeholder, type }) => {
       PostsStore.getPostsList(undefined, type);
     }
   }, [debouncedSearchTerm, type]);
-  
+
   useEffect(() => {
     setSearchTerm('');
     PostsStore.resetSearch();
