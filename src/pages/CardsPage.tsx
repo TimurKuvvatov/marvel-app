@@ -48,10 +48,12 @@ const CardsPage: FC<CardsPageProps> = observer(({ type }) => {
         <Loading />
       ) : (
         <>
-          <CardSection
-            pageName={type === 'character' ? 'characters' : 'comics'}
-            items={type === 'character' ? PostsStore.characters : PostsStore.comics}
-          />
+          <section>
+            <CardSection
+              pageName={type === 'character' ? 'characters' : 'comics'}
+              items={type === 'character' ? PostsStore.characters : PostsStore.comics}
+            />
+          </section>
           <Divider />
           <Pagination
             currentPage={PostsStore.currentPage}

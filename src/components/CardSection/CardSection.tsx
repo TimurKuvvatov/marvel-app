@@ -10,11 +10,11 @@ interface CardSectionProps {
 const CardSection: FC<CardSectionProps> = ({ items, pageName }) => {
   const navigate = useNavigate();
   return (
-    <section className={classes.cardSection}>
+    <div className={classes.cardSection}>
       {items.map((item) => (
         <Card key={`${pageName}-${item.id}`} onClick={() => navigate(`/${pageName}/${item.id}`)} item={item} />
       ))}
-    </section>
+    </div>
   );
 };
 
