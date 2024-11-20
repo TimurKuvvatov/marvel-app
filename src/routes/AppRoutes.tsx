@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import CardsPage from '../pages/CardsPage';
 import CardPage from '../pages/CardPage';
 import postsStore from '../stores/PostsStore';
+import FavoritesPage from '../pages/FavoritesPage';
 
 const AppRoutes: FC = observer(() => {
   useEffect(() => {
@@ -25,11 +26,15 @@ const AppRoutes: FC = observer(() => {
     },
     {
       path: '/characters/:id',
-      element: <CardPage type="character" items={postsStore.characters} />,
+      element: <CardPage type="character"/>,
     },
     {
       path: '/comics/:id',
-      element: <CardPage type="comic" items={postsStore.comics} />,
+      element: <CardPage type="comic"/>,
+    },
+    {
+      path: '/favorites',
+      element: <FavoritesPage />,
     },
   ]);
 
