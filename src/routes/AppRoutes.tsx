@@ -1,31 +1,39 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useRoutes } from 'react-router-dom';
-import CharactersPage from '../pages/CharactersPage';
-import ComicsPage from '../pages/ComicsPage';
-import { mockCharacters, mockComics } from '../data/mockData';
+import { observer } from 'mobx-react-lite';
+import CardsPage from '../pages/CardsPage';
 import CardPage from '../pages/CardPage';
+import postsStore from '../stores/PostsStore';
 
-const AppRoutes: FC = () => {
+const AppRoutes: FC = observer(() => {
+  useEffect(() => {
+    postsStore.getPostsList();
+  }, []);
+
   const routes = useRoutes([
     {
       path: '/',
-      element: <CharactersPage characters={mockCharacters} />,
+      element: <CardsPage type="character" />,
     },
     {
-      path: 'characters/:id',
-      element: <CardPage type="character" items={mockCharacters} />,
+      path: '/characters',
+      element: <CardsPage type="character" />,
     },
     {
-      path: 'comics',
-      element: <ComicsPage comics={mockComics} />,
+      path: '/comics',
+      element: <CardsPage type="comic" />,
     },
     {
-      path: 'comics/:id',
-      element: <CardPage type="comic" items={mockComics} />,
+      path: '/characters/:id',
+      element: <CardPage type="character" items={postsStore.characters} />,
+    },
+    {
+      path: '/comics/:id',
+      element: <CardPage type="comic" items={postsStore.comics} />,
     },
   ]);
 
   return routes;
-};
+});
 
 export default AppRoutes;
