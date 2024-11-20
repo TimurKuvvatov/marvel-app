@@ -6,14 +6,11 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { Character, Comic } from '../types/dataTypes';
 
 const FavoritesPage: FC = () => {
-  const [favCharacters, setFavCharacters] = useLocalStorage<Character[]>(
-    'favorites-characters',
-    [],
-  );
-  const [favComics, setFavComics] = useLocalStorage<Comic[]>('favorites-comics', []);
+  const [favCharacters] = useLocalStorage<Character[]>('favorites-characters', []);
+  const [favComics] = useLocalStorage<Comic[]>('favorites-comics', []);
   return (
     <div className="container">
-      <PageTitle title="Favorites" subtitle="count" />
+      <PageTitle title="Favorites" subtitle={`${favComics.length + favCharacters.length}`} />
       <Divider />
       <section>
         <h2>Characters</h2>
@@ -31,7 +28,7 @@ const FavoritesPage: FC = () => {
         ) : (
           <div>You don't have favorites comics</div>
         )}
-      </section>  
+      </section>
       <Divider />
     </div>
   );
