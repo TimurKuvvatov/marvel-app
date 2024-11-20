@@ -1,15 +1,30 @@
+export interface Item {
+  resourceURI: string;
+  name: string;
+}
+
+export interface Thumbnail {
+  path: string;
+  extension: string;
+}
+
 export interface Character {
   id: number;
   name: string;
   description: string;
-  comics: number[];
-  image: string;
+  thumbnail: Thumbnail;
+  
+  comics: {
+    items: Item[];
+  };
 }
 
 export interface Comic {
   id: number;
-  name: string;
+  title: string;
   description: string;
-  characters: number[];
-  image: string;
+  thumbnail: Thumbnail;
+  characters: {
+    items: Item[];
+  };
 }
