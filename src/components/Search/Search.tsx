@@ -10,10 +10,12 @@ interface SearchProps {
 
 const Search: FC<SearchProps> = ({ placeholder, type }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm, 3000);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const debouncedSearchTerm = useDebounce(searchTerm, isSubmitting ? 0 : 3000);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
+      PostsStore.currentPage = 0;
       PostsStore.getPostsList(debouncedSearchTerm, type);
     } else {
       PostsStore.resetSearch();
@@ -26,15 +28,21 @@ const Search: FC<SearchProps> = ({ placeholder, type }) => {
     setSearchTerm('');
     PostsStore.resetSearch();
   }, [type]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     PostsStore.setSearchTerm(e.target.value);
+    setIsSubmitting(false);
   };
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     PostsStore.setSearchTerm(searchTerm);
     PostsStore.getPostsList(searchTerm, type);
+    setTimeout(() => {
+      setIsSubmitting(false);
+    }, 3000);
   };
 
   return (
