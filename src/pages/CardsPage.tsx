@@ -44,7 +44,7 @@ const CardsPage: FC<CardsPageProps> = observer(({ type }) => {
 
       <Divider />
 
-      {loading ? (
+      {loading || (PostsStore.characters.length === 0 && PostsStore.comics.length === 0) ? (
         <Loading />
       ) : (
         <>
