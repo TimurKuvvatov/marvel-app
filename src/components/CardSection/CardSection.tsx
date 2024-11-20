@@ -8,16 +8,18 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 interface CardSectionProps {
   items: Character[] | Comic[];
   pageName: string;
+  setFavCharacters?: (favorites: Character[]) => void;
+  setFavComics?: (favorites: Comic[]) => void;
 }
 
-const CardSection: FC<CardSectionProps> = ({ items, pageName }) => {
+const CardSection: FC<CardSectionProps> = ({ items, pageName, setFavCharacters, setFavComics }) => {
   const navigate = useNavigate();
 
-  const [favCharacters, setFavCharacters] = useLocalStorage<Character[]>(
+  const [favCharacters, setLocalFavCharacters] = useLocalStorage<Character[]>(
     `favorites-characters`,
     [],
   );
-  const [favComics, setFavComics] = useLocalStorage<Comic[]>(`favorites-comics`, []);
+  const [favComics, setLocalFavComics] = useLocalStorage<Comic[]>(`favorites-comics`, []);
 
   const toggleFavorite = (item: Character | Comic) => {
     if ('name' in item) {
@@ -26,15 +28,21 @@ const CardSection: FC<CardSectionProps> = ({ items, pageName }) => {
         ? favCharacters.filter((fav) => fav.id !== item.id)
         : [...favCharacters, item as Character];
 
-      setFavCharacters(newFavorites);
+      setLocalFavCharacters(newFavorites);
+      if (setFavCharacters) {
+        setFavCharacters(newFavorites);
+      }
     } else {
       const isFavorite = favComics.some((fav) => fav.id === item.id);
       const newFavorites = isFavorite
         ? favComics.filter((fav) => fav.id !== item.id)
         : [...favComics, item as Comic];
 
-      setFavComics(newFavorites);
-    } 
+      setLocalFavComics(newFavorites);
+      if (setFavComics) {
+        setFavComics(newFavorites);
+      }
+    }
   };
 
   return (
