@@ -1,16 +1,12 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useRoutes } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+
 import CardsPage from '../pages/CardsPage';
 import CardPage from '../pages/CardPage';
-import postsStore from '../stores/PostsStore';
 import FavoritesPage from '../pages/FavoritesPage';
 
 const AppRoutes: FC = observer(() => {
-  useEffect(() => {
-    postsStore.getPostsList();
-  }, []);
-
   const routes = useRoutes([
     {
       path: '/',
@@ -26,11 +22,11 @@ const AppRoutes: FC = observer(() => {
     },
     {
       path: '/characters/:id',
-      element: <CardPage type="character"/>,
+      element: <CardPage type="character" />,
     },
     {
       path: '/comics/:id',
-      element: <CardPage type="comic"/>,
+      element: <CardPage type="comic" />,
     },
     {
       path: '/favorites',
