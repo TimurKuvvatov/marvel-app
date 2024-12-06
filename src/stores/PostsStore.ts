@@ -13,8 +13,8 @@ class PostsStore {
   loading: boolean = false;
   error: string | null = null;
   currentPage: number = 0;
-  pageSize: number = 12;
-
+  pageSize: number = 18;
+  abortController: AbortController | null = null;
   constructor() {
     makeAutoObservable(this);
   }
@@ -66,6 +66,7 @@ class PostsStore {
   async getPostsList(searchTerm?: string, type?: 'character' | 'comic') {
     this.loading = true;
     this.error = null;
+
     const publicKey = import.meta.env.VITE_PUBLIC_API_KEY;
     const privateKey = import.meta.env.VITE_PRIVATE_API_KEY;
     const timestamp = new Date().getTime().toString();
@@ -87,7 +88,7 @@ class PostsStore {
           },
         });
         runInAction(() => {
-          this.characters = charactersResponse.data.data.results;
+          this.characters = [...this.characters, ...charactersResponse.data.data.results];
           this.totalCharacters = charactersResponse.data.data.total;
         });
       } else if (type === 'comic') {
@@ -102,7 +103,7 @@ class PostsStore {
           },
         });
         runInAction(() => {
-          this.comics = comicsResponse.data.data.results;
+          this.comics = [...this.comics, ...comicsResponse.data.data.results];
           this.totalComics = comicsResponse.data.data.total;
         });
       }
@@ -137,7 +138,7 @@ class PostsStore {
       throw error;
     }
   }
-  async loadNextPage(type?: 'character' | 'comic') {
+  async loadMoreItems(type?: 'character' | 'comic') {
     if (
       (this.currentPage + 1) * this.pageSize <
       (type === 'character' ? this.totalCharacters : this.totalComics)
@@ -147,25 +148,6 @@ class PostsStore {
     }
   }
 
-  async loadPreviousPage(type?: 'character' | 'comic') {
-    if (this.currentPage > 0) {
-      this.currentPage -= 1;
-      await this.getPostsList(this.searchTerm, type);
-    }
-  }
-
-  async loadToFirstPage(type?: 'character' | 'comic') {
-    this.currentPage = 0;
-    await this.getPostsList(this.searchTerm, type);
-  }
-
-  async loadToLastPage(type?: 'character' | 'comic') {
-    this.currentPage =
-      Math.ceil((type === 'character' ? this.totalCharacters : this.totalComics) / this.pageSize) -
-      1;
-    await this.getPostsList(this.searchTerm, type);
-  }
-
   setSearchTerm(term: string) {
     this.searchTerm = term;
   }
@@ -173,6 +155,8 @@ class PostsStore {
   resetSearch() {
     this.searchTerm = '';
     this.currentPage = 0;
+    this.comics = [];
+    this.characters = [];
   }
 }
 
