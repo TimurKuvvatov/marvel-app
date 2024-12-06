@@ -1,49 +1,19 @@
 import { FC } from 'react';
-import { Character, Comic } from '../../types/dataTypes';
 import classes from './CardSection.module.scss';
-import Card from '../Card/Card';
+import { Character, Comic } from '../../types/dataTypes';
 import { useNavigate } from 'react-router-dom';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import useFavorites from '../../hooks/useFavorites';
+
+import Card from '../Card/Card';
 
 interface CardSectionProps {
   items: Character[] | Comic[];
   pageName: string;
-  setFavCharacters?: (favorites: Character[]) => void;
-  setFavComics?: (favorites: Comic[]) => void;
 }
 
-const CardSection: FC<CardSectionProps> = ({ items, pageName, setFavCharacters, setFavComics }) => {
+const CardSection: FC<CardSectionProps> = ({ items, pageName }) => {
   const navigate = useNavigate();
-
-  const [favCharacters, setLocalFavCharacters] = useLocalStorage<Character[]>(
-    `favorites-characters`,
-    [],
-  );
-  const [favComics, setLocalFavComics] = useLocalStorage<Comic[]>(`favorites-comics`, []);
-
-  const toggleFavorite = (item: Character | Comic) => {
-    if ('name' in item) {
-      const isFavorite = favCharacters.some((fav) => fav.id === item.id);
-      const newFavorites = isFavorite
-        ? favCharacters.filter((fav) => fav.id !== item.id)
-        : [...favCharacters, item as Character];
-
-      setLocalFavCharacters(newFavorites);
-      if (setFavCharacters) {
-        setFavCharacters(newFavorites);
-      }
-    } else {
-      const isFavorite = favComics.some((fav) => fav.id === item.id);
-      const newFavorites = isFavorite
-        ? favComics.filter((fav) => fav.id !== item.id)
-        : [...favComics, item as Comic];
-
-      setLocalFavComics(newFavorites);
-      if (setFavComics) {
-        setFavComics(newFavorites);
-      }
-    }
-  };
+  const { favCharacters, favComics, toggleFavorite } = useFavorites();
 
   return (
     <div className={classes.cardSection}>
