@@ -13,6 +13,7 @@ interface CardsPageProps {
 
 const CardsPage: FC<CardsPageProps> = observer(({ type }) => {
   const { comics, characters } = PostsStore;
+
   useEffect(() => {
     PostsStore.resetSearch();
     if (type === 'character') {
@@ -21,7 +22,6 @@ const CardsPage: FC<CardsPageProps> = observer(({ type }) => {
       PostsStore.getTotalComics();
     }
   }, [type]);
-
   return (
     <div className="container">
       <PageTitle
