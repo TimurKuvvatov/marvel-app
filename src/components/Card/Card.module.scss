@@ -5,6 +5,22 @@
   border: 1px solid gray;
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  .heart {
+    opacity: 0;
+    height: 48px;
+    width: 48px;
+    position: absolute;
+    transition: all 0.2s ease-in-out;
+    right: 0;
+    background: url('../../assets/svg/empty-heart.svg');
+  }
+  .isFavorite {
+    background: url('../../assets/svg/heart.svg');
+    animation: heart-beat 0.3s ease;
+  }
+
   .image {
     background-color: gray;
     background-size: cover !important;
@@ -16,9 +32,37 @@
     padding: 10px;
     .title {
       color: $primary-red;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+    }
+    .description {
+      font-weight: 300;
+      font-size: 15px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
     }
   }
   &:hover {
     transform: translateY(-5px);
+    .heart {
+      opacity: 1;
+    }
+  }
+}
+@keyframes heart-beat {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
   }
 }
